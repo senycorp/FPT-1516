@@ -1,0 +1,24 @@
+package com.fpt.u0.main;
+
+public class ButtonState {
+	private int row;
+	private int column;
+
+	private boolean state = false;
+
+	public ButtonState(int row, int column, boolean state) {
+
+	}
+
+	public int getRow() {
+		return this.row;
+	}
+
+	public int getColumn() {
+		return this.column;
+	}
+
+	public boolean getState() {
+		return this.state;
+	}
+}
