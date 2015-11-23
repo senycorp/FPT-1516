@@ -1,0 +1,5 @@
+/target/
+/.plugins/
+.log
+version.ini
+/.metadata/
