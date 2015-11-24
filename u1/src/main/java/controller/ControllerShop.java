@@ -1,5 +1,6 @@
 package controller;
 
+import component.view.Alert;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -21,7 +22,6 @@ public class ControllerShop {
      * View
      */
     private ViewShop viewShop;
-
 
     /**
      * Link model and view to controller
@@ -59,7 +59,14 @@ public class ControllerShop {
      */
     private void deleteButton() {
         // Delete product and update list
-        modelShop.doRemove(viewShop.getTable().getSelectionModel().getSelectedIndex());
+        int rowIndex = viewShop.getTable().getSelectionModel().getSelectedIndex();
+
+        /**
+         * Check for filled index before trying to delete to prevent errors and exceptions
+         */
+        if (modelShop.getProducts().get(rowIndex) != null) {
+            modelShop.doRemove(rowIndex);
+        }
     }
 
     /**
@@ -72,16 +79,23 @@ public class ControllerShop {
 
         // Check for valid values
         if (price == null || quantity == null) {
-            System.out.println("Please make sure you typed numeric values for quantity and price!");
+            Alert.warning("Invalid Information",
+                          null,
+                          "Please make sure that price and quantity are numeric values. " +
+                                  "It is necessary to use (dot) as floating point instead of commata.").showAndWait();
         } else {
             // Create product
             Product p = new Product();
+
+            /**
+             * TODO: ID property is setted to millis.
+             */
             p.setId(System.currentTimeMillis() % 1000);
             p.setName(viewShop.getName());
             p.setPrice(price);
             p.setQuantity(quantity);
 
-            // Add it to the model and update the tableView
+            // Add it to the model - FX will update the list automatically
             modelShop.add(p);
         }
     }

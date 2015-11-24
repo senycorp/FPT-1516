@@ -6,7 +6,6 @@ import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -41,7 +40,7 @@ public class ViewShop
     /**
      * TableView: Products
      */
-    public TableView<Product> productsTableView = new TableView<Product>();
+    public ProductsTableView<Product> productsTableView = new ProductsTableView<Product>();
 
     /**
      * TextFormatter: Price
@@ -82,19 +81,6 @@ public class ViewShop
 
         // Add all parts to right area
         VBox rightBox = new VBox(nameBox, priceBox, quantityBox, buttonBox);
-
-        // Set table column assignment
-        TableColumn<Product, String> nameCol = new TableColumn<Product, String>("Name");
-        nameCol.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
-
-        TableColumn<Product, Double> priceCol = new TableColumn<Product, Double>("Price");
-        priceCol.setCellValueFactory(new PropertyValueFactory<Product, Double>("price"));
-
-        TableColumn<Product, Integer> quantityCol = new TableColumn<Product, Integer>("Quantity");
-        quantityCol.setCellValueFactory(new PropertyValueFactory<Product, Integer>("quantity"));
-
-        // Add column descriptions to tableView
-        productsTableView.getColumns().addAll(nameCol, priceCol, quantityCol);
 
         // Create Splitpane and add rightbox and tableView
         SplitPane contentPane = new SplitPane();
@@ -193,29 +179,4 @@ public class ViewShop
             return null;
         }
     }
-
-    public String getName(String name) {
-        if (nameInput.equals("")) {
-            return "You have to input a name.";
-        } else {
-            return name;
-        }
-    }
-
-    public String getPrice(Double price) {
-        if (priceInput.equals("")) {
-            return "You have to input a price.";
-        } else {
-            return price.toString();
-        }
-    }
-
-    public String getQuantity(Integer quantity) {
-        if (quantityInput.equals("")) {
-            return "You have to input a quantity.";
-        } else {
-            return quantity.toString();
-        }
-    }
-
 }

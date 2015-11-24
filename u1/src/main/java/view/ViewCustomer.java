@@ -2,6 +2,9 @@ package view;
 
 import fpt.com.Order;
 import fpt.com.Product;
+import javafx.beans.binding.BooleanBinding;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -40,6 +43,7 @@ public class ViewCustomer
         Label productsLabel = new Label("Products");
         HBox  buyGroup      = new HBox(buyButton, quantityInput);
         VBox  productsBox   = new VBox(productsLabel, productsTableView, buyGroup);
+        this.quantityInput.setPromptText("Quantity...");
 
         // Create right part: Orders
         Label ordersLAbel = new Label("Orders");
@@ -52,6 +56,25 @@ public class ViewCustomer
 
         // Add Splitpane to View
         this.getChildren().add(contentPane);
+
+        // Activate add button only when all required input fields are filled
+        BooleanBinding booleanBinding = quantityInput
+                .textProperty()
+                .isEqualTo("");
+        buyButton.disableProperty().bind(booleanBinding);
+    }
+
+    /**
+     * Add event handler for buttons
+     *
+     * @param eventHandler
+     */
+    public void addEventHandler(EventHandler<ActionEvent> eventHandler) {
+        buyButton.addEventHandler(ActionEvent.ACTION, eventHandler);
+    }
+
+    public Button getBuyButton() {
+        return this.buyButton;
     }
 
     /**
@@ -79,5 +102,23 @@ public class ViewCustomer
      */
     public Integer getSelectedProductIndex() {
         return productsTableView.getSelectionModel().getSelectedIndex();
+    }
+
+    /**
+     * Get content of quantity input
+     *
+     * @return
+     */
+    public Integer getQuantity() {
+        try {
+            int number = Integer.parseInt(quantityInput.getText());
+            if (number > 0) {
+                return Integer.parseInt(quantityInput.getText());
+            } else {
+                return null;
+            }
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 }
