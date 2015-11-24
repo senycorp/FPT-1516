@@ -14,7 +14,7 @@ public class ModelShop
     /**
      * Product list
      */
-    private ProductList products;
+    private ObservableList<Product> products;
 
     /**
      * Constructor
@@ -23,7 +23,7 @@ public class ModelShop
      */
     public ModelShop(ProductList productList) {
         // Set products
-        this.products = productList;
+        this.products = FXCollections.observableArrayList(productList);
     }
 
     /**
@@ -32,7 +32,7 @@ public class ModelShop
      * @return
      */
     public ObservableList<Product> getProducts() {
-        return FXCollections.observableArrayList(products);
+        return this.products;
     }
 
     @Override

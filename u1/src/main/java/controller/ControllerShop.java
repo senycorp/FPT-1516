@@ -60,7 +60,6 @@ public class ControllerShop {
     private void deleteButton() {
         // Delete product and update list
         modelShop.doRemove(viewShop.getTable().getSelectionModel().getSelectedIndex());
-        viewShop.getTable().setItems(modelShop.getProducts());
     }
 
     /**
@@ -84,7 +83,6 @@ public class ControllerShop {
 
             // Add it to the model and update the tableView
             modelShop.add(p);
-            viewShop.getTable().setItems(modelShop.getProducts());
         }
     }
 }
