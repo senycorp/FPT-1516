@@ -68,8 +68,8 @@ public class ControllerShop {
      */
     private void addProduct() {
         // Get price and quantity fields from view
-        Double  price    = viewShop.getPriceInputPaneText();
-        Integer quantity = viewShop.getQuantityInputPaneText();
+        Double  price    = viewShop.getPrice();
+        Integer quantity = viewShop.getQuantity();
 
         // Check for valid values
         if (price == null || quantity == null) {
@@ -78,7 +78,7 @@ public class ControllerShop {
             // Create product
             Product p = new Product();
             p.setId(System.currentTimeMillis() % 1000);
-            p.setName(viewShop.getNameInputPaneText());
+            p.setName(viewShop.getName());
             p.setPrice(price);
             p.setQuantity(quantity);
 
