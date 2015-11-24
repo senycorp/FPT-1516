@@ -1,75 +1,70 @@
 package fpt.com;
 
-import java.io.Serializable;
-
 import javafx.beans.value.ObservableValue;
+
+import java.io.Serializable;
 
 /**
  * This interface is used in exercise one.
- * 
+ *
  * @author Jens Kapitza
- * 
  */
-public interface Product extends Serializable {
+public interface Product
+        extends Serializable {
 
-	/**
-	 * 
-	 * @return The id for the product.
-	 */
-	long getId();
+    /**
+     * @return The id for the product.
+     */
+    long getId();
 
-	/**
-	 * set the id
-	 * 
-	 * @param id
-	 *            the id for the product
-	 */
-	void setId(long id);
+    /**
+     * set the id
+     *
+     * @param id the id for the product
+     */
+    void setId(long id);
 
-	/**
-	 * @return The price of the product
-	 */
-	double getPrice();
+    /**
+     * @return The price of the product
+     */
+    double getPrice();
 
-	/**
-	 * Alters the price of the product.
-	 * 
-	 * @param price
-	 *            The new price
-	 */
-	void setPrice(double price);
+    /**
+     * Alters the price of the product.
+     *
+     * @param price The new price
+     */
+    void setPrice(double price);
 
-	/**
-	 * @return The amount of the Product remaining
-	 */
-	int getQuantity();
+    /**
+     * @return The amount of the Product remaining
+     */
+    int getQuantity();
 
-	/**
-	 * Alters the quantity of the Product.
-	 * 
-	 * @param quantity
-	 *            The new quantity of the Product
-	 */
-	void setQuantity(int quantity);
+    /**
+     * Alters the quantity of the Product.
+     *
+     * @param quantity The new quantity of the Product
+     */
+    void setQuantity(int quantity);
 
-	/**
-	 * @return The name of the Product
-	 */
-	String getName();
+    /**
+     * @return The name of the Product
+     */
+    String getName();
 
-	/**
-	 * set the name for the product
-	 * 
-	 * @param name
-	 *            the product name
-	 */
-	void setName(String name);
-	
-	// new since JavaFX
+    /**
+     * set the name for the product
+     *
+     * @param name the product name
+     */
+    void setName(String name);
 
-	ObservableValue<String> nameProperty();
+    // new since JavaFX
 
-	ObservableValue<Number> priceProperty();
+    ObservableValue<String> nameProperty();
 
-	ObservableValue<Number> quantityProperty();
+    ObservableValue<Number> priceProperty();
+
+    ObservableValue<Number> quantityProperty();
 }

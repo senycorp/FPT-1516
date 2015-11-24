@@ -10,7 +10,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
  *
  * @param <Product>
  */
-public class ProductsTableView<Product> extends TableView<Product> {
+public class ProductsTableView<Product>
+        extends TableView<Product> {
 
     /**
      * Constructor

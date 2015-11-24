@@ -3,12 +3,14 @@ package view;
 import fpt.com.Order;
 import fpt.com.Product;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 /**
  * View: Customer
  */
-public class ViewCustomer extends VBox {
+public class ViewCustomer
+        extends VBox {
 
     /**
      * TableView: Products
@@ -41,11 +43,11 @@ public class ViewCustomer extends VBox {
 
         // Create right part: Orders
         Label ordersLAbel = new Label("Orders");
-        VBox ordersBox = new VBox(ordersLAbel, ordersTableView);
+        VBox  ordersBox   = new VBox(ordersLAbel, ordersTableView);
 
         // Setting up splitpane with product and orders section
         SplitPane contentPane = new SplitPane(productsBox, ordersBox);
-	    contentPane.prefHeightProperty().bind(this.heightProperty());
+        contentPane.prefHeightProperty().bind(this.heightProperty());
         this.setMinHeight(300);
 
         // Add Splitpane to View

@@ -9,7 +9,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
  *
  * @param <Order>
  */
-public class OrdersTableView<Order> extends TableView<Order> {
+public class OrdersTableView<Order>
+        extends TableView<Order> {
 
     /**
      * Constructor

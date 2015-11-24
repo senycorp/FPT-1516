@@ -1,150 +1,148 @@
 package view;
 
+import fpt.com.Product;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.*;
-import fpt.com.Product;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
-public class ViewShop extends VBox {
+public class ViewShop
+        extends VBox {
 
-	public Button addButton = new Button("Add");
-	public Button deleteButton = new Button("Delete");
+    public Button addButton    = new Button("Add");
+    public Button deleteButton = new Button("Delete");
 
-	public TextField nameInput = new TextField();
-	private TextField priceInput = new TextField();
-	private TextField quantityInput = new TextField();
+    public  TextField nameInput     = new TextField();
+    public TableView<Product> productsTableView = new TableView<Product>();
+    TextFormatter<Product> priceFormatter;
+    TextFormatter<Product> quantityFormatter;
+    private TextField priceInput    = new TextField();
+    private TextField quantityInput = new TextField();
+    private Label nameLabel     = new Label("Name:");
+    private Label priceLabel    = new Label("Price:");
+    private Label quantityLabel = new Label("Quantity:");
 
-	private Label nameLabel = new Label("Name:");
-	private Label priceLabel = new Label("Price:");
-	private Label quantityLabel = new Label("Quantity:");
+    @SuppressWarnings("unchecked")
+    public ViewShop() {
+        VBox nameBox     = new VBox(nameLabel, nameInput);
+        VBox priceBox    = new VBox(priceLabel, priceInput);
+        VBox quantityBox = new VBox(quantityLabel, quantityInput);
+        HBox buttonBox   = new HBox(addButton, deleteButton);
 
-	public TableView<Product> productsTableView = new TableView<Product>();
+        this.addButton.setId("addButton");
+        this.deleteButton.setId("deleteButton");
 
+        VBox rightBox = new VBox(nameBox, priceBox, quantityBox, buttonBox);
 
-	TextFormatter<Product> priceFormatter;
-	TextFormatter<Product> quantityFormatter;
+        //TableView Zuordnungen
+        TableColumn<Product, String> nameCol = new TableColumn<Product, String>("Name");
+        nameCol.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
 
-	@SuppressWarnings("unchecked")
-	public ViewShop() {
-		VBox nameBox = new VBox(nameLabel, nameInput);
-		VBox priceBox = new VBox(priceLabel, priceInput);
-		VBox quantityBox = new VBox(quantityLabel, quantityInput);
-		HBox buttonBox = new HBox(addButton, deleteButton);
+        TableColumn<Product, Double> priceCol = new TableColumn<Product, Double>("Price");
+        priceCol.setCellValueFactory(new PropertyValueFactory<Product, Double>("price"));
 
-		this.addButton.setId("addButton");
-		this.deleteButton.setId("deleteButton");
+        TableColumn<Product, Integer> quantityCol = new TableColumn<Product, Integer>("Quantity");
+        quantityCol.setCellValueFactory(new PropertyValueFactory<Product, Integer>("quantity"));
 
-		VBox rightBox = new VBox(nameBox, priceBox, quantityBox, buttonBox);
+        productsTableView.getColumns().addAll(nameCol, priceCol, quantityCol);
 
-		//TableView Zuordnungen
-		TableColumn<Product, String> nameCol = new TableColumn<Product, String>("Name");
-		nameCol.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
+        //Fuelle die SplitPane mit der Table und HBox
+        SplitPane contentPane = new SplitPane();
+        contentPane.getItems().addAll(productsTableView, rightBox);
 
-		TableColumn<Product, Double> priceCol = new TableColumn<Product, Double>("Price");
-		priceCol.setCellValueFactory(new PropertyValueFactory<Product, Double>("price"));
+        //Fuelle die VBox mit allen Elementen
+        this.getChildren().addAll(contentPane);
 
-		TableColumn<Product, Integer> quantityCol = new TableColumn<Product, Integer>("Quantity");
-		quantityCol.setCellValueFactory(new PropertyValueFactory<Product, Integer>("quantity"));
+        //Bei veränderung der Größe wird nichts "kaputt" gemacht
+        productsTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-		productsTableView.getColumns().addAll(nameCol, priceCol, quantityCol);
+        priceInput.setTextFormatter(priceFormatter);
+        quantityInput.setTextFormatter(quantityFormatter);
 
-		//Fuelle die SplitPane mit der Table und HBox
-		SplitPane contentPane = new SplitPane();
-		contentPane.getItems().addAll(productsTableView, rightBox);
+        deleteButton.disableProperty().bind(
+                Bindings.equal(-1, productsTableView.getSelectionModel()
+                                                    .selectedIndexProperty()));
 
-		//Fuelle die VBox mit allen Elementen
-		this.getChildren().addAll( contentPane);
+        BooleanBinding booleanBinding = nameInput
+                .textProperty()
+                .isEqualTo("")
+                .or(priceInput.textProperty().isEqualTo("")
+                              .or(quantityInput.textProperty().isEqualTo("")));
 
-		//Bei veränderung der Größe wird nichts "kaputt" gemacht
-		productsTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        addButton.disableProperty().bind(booleanBinding);
+    }
 
-		priceInput.setTextFormatter(priceFormatter);
-		quantityInput.setTextFormatter(quantityFormatter);
+    public void addEventHandler(EventHandler<ActionEvent> eventHandler) {
+        addButton.addEventHandler(ActionEvent.ACTION, eventHandler);
+        deleteButton.addEventHandler(ActionEvent.ACTION, eventHandler);
+    }
 
-		deleteButton.disableProperty().bind(
-				Bindings.equal(-1, productsTableView.getSelectionModel()
-						.selectedIndexProperty()));
+    public TableView<Product> getTable() {
+        return productsTableView;
+    }
 
-		BooleanBinding booleanBinding = nameInput
-				.textProperty()
-				.isEqualTo("")
-				.or(priceInput.textProperty().isEqualTo("")
-						.or(quantityInput.textProperty().isEqualTo("")));
+    public String getNameInputPaneText() {
+        if (nameInput.getText().length() != 0) {
+            return nameInput.getText();
+        } else {
+            return null;
+        }
+    }
 
-		addButton.disableProperty().bind(booleanBinding);
-	}
+    public Double getPriceInputPaneText() {
+        try {
+            double number = Double.parseDouble(priceInput.getText());
+            if (number > 0) {
+                return Double.parseDouble(priceInput.getText());
+            } else {
+                return null;
+            }
+        } catch (NumberFormatException e) {
 
-	public void addEventHandler(EventHandler<ActionEvent> eventHandler) {
-		addButton.addEventHandler(ActionEvent.ACTION, eventHandler);
-		deleteButton.addEventHandler(ActionEvent.ACTION, eventHandler);
-	}
+            return null;
+        }
+    }
 
-	public TableView<Product> getTable() {
-		return productsTableView;
-	}
+    public Integer getQuantityInputPaneText() {
+        try {
+            int number = Integer.parseInt(quantityInput.getText());
+            if (number > 0) {
+                return Integer.parseInt(quantityInput.getText());
+            } else {
+                return null;
+            }
 
-	public String getNameInputPaneText() {
-		if (nameInput.getText().length() != 0) {
-			return nameInput.getText();
-		} else {
-			return null;
-		}
-	}
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
 
-	public Double getPriceInputPaneText() {
-		try {
-			double number = Double.parseDouble(priceInput.getText());
-			if (number > 0) {
-				return Double.parseDouble(priceInput.getText());
-			} else {
-				return null;
-			}
-		} catch (NumberFormatException e) {
+    public String getName(String name) {
+        if (nameInput.equals("")) {
+            return "You have to input a name.";
+        } else {
+            return name;
+        }
+    }
 
-			return null;
-		}
-	}
+    public String getPrice(Double price) {
+        if (priceInput.equals("")) {
+            return "You have to input a price.";
+        } else {
+            return price.toString();
+        }
+    }
 
-	public Integer getQuantityInputPaneText() {
-		try {
-			int number = Integer.parseInt(quantityInput.getText());
-			if (number > 0) {
-				return Integer.parseInt(quantityInput.getText());
-			} else {
-				return null;
-			}
-
-		} catch (NumberFormatException e) {
-			return null;
-		}
-	}
-
-	public String getName(String name) {
-		if (nameInput.equals("")) {
-			return "You have to input a name.";
-		} else {
-			return name;
-		}
-	}
-
-	public String getPrice(Double price) {
-		if (priceInput.equals("")) {
-			return "You have to input a price.";
-		} else {
-			return price.toString();
-		}
-	}
-
-	public String getQuantity(Integer quantity) {
-		if (quantityInput.equals("")) {
-			return "You have to input a quantity.";
-		} else {
-			return quantity.toString();
-		}
-	}
+    public String getQuantity(Integer quantity) {
+        if (quantityInput.equals("")) {
+            return "You have to input a quantity.";
+        } else {
+            return quantity.toString();
+        }
+    }
 
 }
