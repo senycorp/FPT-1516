@@ -94,7 +94,7 @@ public class ControllerShop {
             
             // add ID to the Product
             try {
-				p.setId(idGen.getLongId());
+				p.setId(idGen.getId());
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}

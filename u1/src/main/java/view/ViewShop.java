@@ -1,5 +1,7 @@
 package view;
 
+import javax.swing.JComboBox;
+
 import fpt.com.Product;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
@@ -22,6 +24,21 @@ public class ViewShop
      */
     public Button deleteButton = new Button("Delete");
 
+    /**
+     * Button: Save
+     */
+    public Button saveButton = new Button("Save");
+    
+    /**
+     * Button: Load
+     */
+    public Button loadButton = new Button("Load");
+    
+    /**
+     * Combobox: Strategies
+     */
+    public ComboBox comboBox = new ComboBox();
+    
     /**
      * Input: Name
      */
@@ -74,6 +91,7 @@ public class ViewShop
         VBox priceBox    = new VBox(priceLabel, priceInput);
         VBox quantityBox = new VBox(quantityLabel, quantityInput);
         HBox buttonBox   = new HBox(addButton, deleteButton);
+        //HBox serialBox = new HBox(saveButton, loadButton);
 
         // Set id of buttons for identification purpose in handler
         this.addButton.setId("addButton");
@@ -86,8 +104,12 @@ public class ViewShop
         SplitPane contentPane = new SplitPane();
         contentPane.getItems().addAll(productsTableView, rightBox);
 
+        // Create ComboBox for strategies
+        comboBox.getItems().addAll("BinaryStrategy", "XMLStrategy", "XStreamStrategy");
+        HBox menueBox = new HBox(comboBox, saveButton, loadButton);
+        
         // Set content of view
-        this.getChildren().addAll(contentPane);
+        this.getChildren().addAll(menueBox, contentPane);
 
         // Prevent GUI defects on resize
         productsTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
