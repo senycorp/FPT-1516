@@ -89,6 +89,8 @@ public class ViewShop
         // Set id of buttons for identification purpose in handler
         this.addButton.setId("addButton");
         this.deleteButton.setId("deleteButton");
+        this.loadButton.setId("loadButton");
+        this.saveButton.setId("saveButton");
 
         // Add all parts to right area
         VBox rightBox = new VBox(nameBox, priceBox, quantityBox, buttonBox);
@@ -133,6 +135,8 @@ public class ViewShop
     public void addEventHandler(EventHandler<ActionEvent> eventHandler) {
         addButton.addEventHandler(ActionEvent.ACTION, eventHandler);
         deleteButton.addEventHandler(ActionEvent.ACTION, eventHandler);
+        loadButton.addEventHandler(ActionEvent.ACTION, eventHandler);
+        saveButton.addEventHandler(ActionEvent.ACTION, eventHandler);
     }
 
     /**

@@ -17,6 +17,8 @@ abstract public class BaseModel<E, T extends BaseModelList>
      */
     protected ObservableList<E> list;
 
+    protected BaseModelList sourceList;
+
     /**
      * Constructor
      *
@@ -24,7 +26,16 @@ abstract public class BaseModel<E, T extends BaseModelList>
      */
     public BaseModel() {
         // Set ObservableList for the view
-        this.list = FXCollections.observableArrayList(getList());
+        this.sourceList = getList();
+        this.list = FXCollections.observableArrayList(this.sourceList);
+    }
+
+    /**
+     * Get Sourcelist
+     * @return
+     */
+    public BaseModelList getSourceList() {
+        return this.sourceList;
     }
 
     /**

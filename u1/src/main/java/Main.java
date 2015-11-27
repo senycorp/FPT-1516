@@ -1,5 +1,3 @@
-package Main;
-
 import fpt.com.controller.ControllerCustomer;
 import fpt.com.controller.ControllerShop;
 import fpt.com.core.ControllerManager;
