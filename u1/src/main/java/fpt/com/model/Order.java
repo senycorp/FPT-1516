@@ -1,12 +1,12 @@
-package model;
+package fpt.com.model;
 
 import fpt.com.Product;
+import fpt.com.core.model.BaseModelList;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Order
-        extends ArrayList<Product>
+        extends BaseModelList<Product>
         implements fpt.com.Order {
 
     @Override

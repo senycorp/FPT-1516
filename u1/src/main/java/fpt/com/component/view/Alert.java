@@ -1,4 +1,4 @@
-package component.view;
+package fpt.com.component.view;
 
 /**
  * Alert-Dialogs

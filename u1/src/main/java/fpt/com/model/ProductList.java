@@ -1,14 +1,13 @@
-package model;
+package fpt.com.model;
 
 import fpt.com.Product;
-
-import java.util.ArrayList;
+import fpt.com.core.model.BaseModelList;
 
 /**
  * Model: ProductList
  */
 public class ProductList
-        extends ArrayList<Product>
+        extends BaseModelList<Product>
         implements fpt.com.ProductList {
 
     /**

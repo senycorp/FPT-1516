@@ -1,7 +1,8 @@
-package view;
+package fpt.com.view;
 
 import fpt.com.Order;
 import fpt.com.Product;
+import fpt.com.core.view.BaseView;
 import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,7 +14,7 @@ import javafx.scene.layout.VBox;
  * View: Customer
  */
 public class ViewCustomer
-        extends VBox {
+        extends BaseView {
 
     /**
      * TableView: Products

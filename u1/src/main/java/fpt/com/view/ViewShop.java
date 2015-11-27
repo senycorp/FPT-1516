@@ -1,8 +1,7 @@
-package view;
-
-import javax.swing.JComboBox;
+package fpt.com.view;
 
 import fpt.com.Product;
+import fpt.com.core.view.BaseView;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
@@ -12,7 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class ViewShop
-        extends VBox {
+        extends BaseView {
 
     /**
      * Button: Add

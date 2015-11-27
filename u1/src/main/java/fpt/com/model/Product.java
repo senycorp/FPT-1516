@@ -1,4 +1,4 @@
-package model;
+package fpt.com.model;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import javafx.beans.property.SimpleDoubleProperty;

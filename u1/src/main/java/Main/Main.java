@@ -1,20 +1,16 @@
 package Main;
 
-import controller.ControllerCustomer;
-import controller.ControllerShop;
+import fpt.com.controller.ControllerCustomer;
+import fpt.com.controller.ControllerShop;
+import fpt.com.core.ControllerManager;
+import fpt.com.core.controller.BaseController;
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import model.ModelShop;
-import model.ProductList;
-import view.ViewCustomer;
-import view.ViewShop;
 
 /**
  * MainClass
  */
 public class Main
-        extends Application {
+        extends fpt.com.core.Application {
 
     /**
      * Main
@@ -26,32 +22,16 @@ public class Main
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public ControllerManager initializeController() {
+        ControllerManager controllerManager = ControllerManager.getInstance();
 
-        // Create productlist and add it to the model
-        ProductList productList = new ProductList();
-        ModelShop   modelShop   = new ModelShop(productList);
+        // Set up controller
+        BaseController c = new ControllerCustomer();
+        controllerManager.put(c.getID(), c);
+        c = new ControllerShop();
 
-        // Create controller and model and link them together
-        ViewShop       viewShop       = new ViewShop();
-        ControllerShop controllerShop = new ControllerShop();
-        controllerShop.link(modelShop, viewShop);
+        controllerManager.put(c.getID(), c);
 
-        // Create GUI: Scene, Stage
-        Scene sceneShop = new Scene(viewShop);
-        primaryStage.setScene(sceneShop);
-        primaryStage.show();
-
-        // Create customer controller and model and link them together
-        ViewCustomer       viewCustomer       = new ViewCustomer();
-        ControllerCustomer controllerCustomer = new ControllerCustomer();
-        controllerCustomer.link(modelShop, viewCustomer);
-
-        // Create GUI: Scene, Stage for Customer
-        Stage stageCustomer = new Stage();
-        Scene sceneCustomer = new Scene(viewCustomer);
-        stageCustomer.setScene(sceneCustomer);
-        stageCustomer.setX(0);
-        stageCustomer.show();
+        return controllerManager;
     }
 }
