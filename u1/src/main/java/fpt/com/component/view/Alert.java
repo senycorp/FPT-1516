@@ -17,9 +17,9 @@ public class Alert {
      */
     public static javafx.scene.control.Alert warning(String title, String header, String content) {
         return createDialog(javafx.scene.control.Alert.AlertType.WARNING,
-                                                        "Warning: " + title,
-                                                        header,
-                                                        content);
+                            "Warning: " + title,
+                            header,
+                            content);
     }
 
     /**
@@ -71,7 +71,8 @@ public class Alert {
      * @param content
      * @return
      */
-    private static javafx.scene.control.Alert createDialog(javafx.scene.control.Alert.AlertType type, String title, String header, String content) {
+    private static javafx.scene.control.Alert createDialog(
+            javafx.scene.control.Alert.AlertType type, String title, String header, String content) {
         javafx.scene.control.Alert alert = factory(type);
         alert.setTitle(title);
         alert.setHeaderText(header);

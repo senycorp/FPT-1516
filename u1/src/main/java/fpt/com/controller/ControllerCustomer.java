@@ -13,7 +13,9 @@ import javafx.event.EventHandler;
 /**
  * ControllerCustommer
  */
-public class ControllerCustomer extends BaseController implements ViewableController{
+public class ControllerCustomer
+        extends BaseController
+        implements ViewableController {
 
     /**
      * Model
@@ -54,8 +56,8 @@ public class ControllerCustomer extends BaseController implements ViewableContro
     @Override
     protected void initializeController() {
         // Cast view and model
-        this.view = (ViewCustomer)this.getView();
-        this.model = (ModelShop)this.getModel();
+        this.view = (ViewCustomer) this.getView();
+        this.model = (ModelShop) this.getModel();
 
         // Set Eventhandler
         view.addEventHandler(new EventHandler<ActionEvent>() {
@@ -74,7 +76,7 @@ public class ControllerCustomer extends BaseController implements ViewableContro
         this.setModel(ControllerManager.getInstance().getControllerById("shop").getModel());
 
         // Do the cast
-        this.model = (ModelShop)this.getModel();
+        this.model = (ModelShop) this.getModel();
 
         // Set items to view list
         this.view.getProductsTable().setItems(this.model.getProducts());

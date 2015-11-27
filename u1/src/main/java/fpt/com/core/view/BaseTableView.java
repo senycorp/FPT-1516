@@ -11,7 +11,8 @@ import java.util.HashMap;
  *
  * @author senycorp
  */
-abstract public class BaseTableView<E> extends TableView<E> {
+abstract public class BaseTableView<E>
+        extends TableView<E> {
 
     /**
      * Constructor

@@ -6,19 +6,20 @@ import java.util.HashMap;
 
 /**
  * ControllerManager
- *
+ * <p/>
  * Global manager for accessing all controllers
  * from everywhere...
  *
  * @author senycorp
  */
-public class ControllerManager extends HashMap<String, BaseController> {
+public class ControllerManager
+        extends HashMap<String, BaseController> {
 
     private static ControllerManager instance;
 
     /**
      * Constructor
-     *
+     * <p/>
      * This is private to prevent multiple instances of this manager
      */
     private ControllerManager() {

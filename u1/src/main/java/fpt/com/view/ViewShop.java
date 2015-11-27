@@ -27,47 +27,41 @@ public class ViewShop
      * Button: Save
      */
     public Button saveButton = new Button("Save");
-    
+
     /**
      * Button: Load
      */
     public Button loadButton = new Button("Load");
-    
+
     /**
      * Combobox: Strategies
      */
     public ComboBox comboBox = new ComboBox();
-    
+
     /**
      * Input: Name
      */
     public TextField nameInput = new TextField();
-
-    /**
-     * Input: Price
-     */
-    private TextField priceInput = new TextField();
-
-    /**
-     * Input: Quantity
-     */
-    private TextField quantityInput = new TextField();
-
     /**
      * TableView: Products
      */
     public ProductsTableView<Product> productsTableView = new ProductsTableView<Product>();
-
     /**
      * TextFormatter: Price
      */
     TextFormatter<Product> priceFormatter;
-
     /**
      * TextFormatter: Quantity
      */
     TextFormatter<Product> quantityFormatter;
-
+    /**
+     * Input: Price
+     */
+    private TextField priceInput = new TextField();
+    /**
+     * Input: Quantity
+     */
+    private TextField quantityInput = new TextField();
     /**
      * Label: Name
      */
@@ -106,7 +100,7 @@ public class ViewShop
         // Create ComboBox for strategies
         comboBox.getItems().addAll("BinaryStrategy", "XMLStrategy", "XStreamStrategy");
         HBox menueBox = new HBox(comboBox, saveButton, loadButton);
-        
+
         // Set content of view
         this.getChildren().addAll(menueBox, contentPane);
 

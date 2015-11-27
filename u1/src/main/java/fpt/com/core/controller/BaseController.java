@@ -28,7 +28,7 @@ abstract public class BaseController {
         if (this instanceof ModelableController) {
             Object modelObject = null;
             try {
-                modelObject = ((ModelableController)this).getRequiredModel().newInstance();
+                modelObject = ((ModelableController) this).getRequiredModel().newInstance();
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -36,7 +36,7 @@ abstract public class BaseController {
             }
 
             if (modelObject instanceof BaseModel) {
-                this.setModel((BaseModel)modelObject);
+                this.setModel((BaseModel) modelObject);
             }
         }
 
@@ -44,7 +44,7 @@ abstract public class BaseController {
         if (this instanceof ViewableController) {
             Object viewObject = null;
             try {
-                viewObject = ((ViewableController)this).getRequiredView().newInstance();
+                viewObject = ((ViewableController) this).getRequiredView().newInstance();
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -62,7 +62,7 @@ abstract public class BaseController {
 
     /**
      * Initialize Controller
-     *
+     * <p/>
      * This method should be used for some pre-start-jobs
      * to set all necessary components.
      */
@@ -78,15 +78,6 @@ abstract public class BaseController {
     }
 
     /**
-     * Get view
-     *
-     * @return
-     */
-    public BaseView getView() {
-        return this.view;
-    }
-
-    /**
      * Set model for controller
      *
      * @param model
@@ -96,6 +87,15 @@ abstract public class BaseController {
         this.model = model;
 
         return this;
+    }
+
+    /**
+     * Get view
+     *
+     * @return
+     */
+    public BaseView getView() {
+        return this.view;
     }
 
     /**
@@ -112,7 +112,7 @@ abstract public class BaseController {
 
     /**
      * Get ID of controller
-     *
+     * <p/>
      * This is required by the ControllerManager
      * to return the desired controller
      *
@@ -122,7 +122,7 @@ abstract public class BaseController {
 
     /**
      * PostInitialization
-     *
+     * <p/>
      * Overwrite this method for doing fancy stuff
      * after all necessary controllers are instantiated.
      */

@@ -8,14 +8,8 @@ import javafx.stage.Stage;
  *
  * @author senycorp
  */
-abstract public class Application extends javafx.application.Application{
-
-    /**
-     * Get all controller
-     *
-     * @return
-     */
-    public abstract ControllerManager initializeController();
+abstract public class Application
+        extends javafx.application.Application {
 
     /**
      * Constructor
@@ -25,6 +19,13 @@ abstract public class Application extends javafx.application.Application{
          * Nothing to implement
          */
     }
+
+    /**
+     * Get all controller
+     *
+     * @return
+     */
+    public abstract ControllerManager initializeController();
 
     @Override
     public void start(Stage primaryStage) throws Exception {

@@ -1,10 +1,10 @@
 package fpt.com.controller;
 
 import fpt.com.component.view.Alert;
+import fpt.com.component.view.IDGenerator;
 import fpt.com.core.controller.BaseController;
 import fpt.com.core.controller.ModelableController;
 import fpt.com.core.controller.ViewableController;
-import fpt.com.component.view.IDGenerator;
 import fpt.com.model.ModelShop;
 import fpt.com.model.Product;
 import fpt.com.view.ViewShop;
@@ -15,7 +15,9 @@ import javafx.scene.control.Button;
 /**
  * ControllerShop
  */
-public class ControllerShop extends BaseController implements ModelableController, ViewableController{
+public class ControllerShop
+        extends BaseController
+        implements ModelableController, ViewableController {
 
     /**
      * Model
@@ -64,14 +66,14 @@ public class ControllerShop extends BaseController implements ModelableControlle
         } else {
             // Create product
             Product p = new Product();
-            
+
             // add ID to the Product
             try {
-				p.setId(idGen.getId());
-			} catch (Exception ex) {
+                p.setId(idGen.getId());
+            } catch (Exception ex) {
                 // TODO: What should we do in this case?!?!?!
-				ex.printStackTrace();
-			}
+                ex.printStackTrace();
+            }
 
             // Set product properties
             p.setName(view.getName());
@@ -86,8 +88,8 @@ public class ControllerShop extends BaseController implements ModelableControlle
     @Override
     protected void initializeController() {
         // Cast view and model
-        this.view = (ViewShop)this.getView();
-        this.model = (ModelShop)this.getModel();
+        this.view = (ViewShop) this.getView();
+        this.model = (ModelShop) this.getModel();
 
         // Create ID-Generator
         this.idGen = IDGenerator.getInstance();

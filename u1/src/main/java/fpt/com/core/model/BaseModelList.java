@@ -7,7 +7,8 @@ import java.util.ArrayList;
  *
  * @author senycorp
  */
-abstract public class BaseModelList<E> extends ArrayList<E>{
+abstract public class BaseModelList<E>
+        extends ArrayList<E> {
     /**
      * Nothing to implement at this moment
      */

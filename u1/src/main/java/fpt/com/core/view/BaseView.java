@@ -7,7 +7,8 @@ import javafx.scene.layout.VBox;
  *
  * @author senycorp
  */
-abstract public class BaseView extends VBox {
+abstract public class BaseView
+        extends VBox {
     /**
      * Nothing to implement at this moment
      */

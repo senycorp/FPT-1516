@@ -9,7 +9,8 @@ import javafx.collections.ObservableList;
  *
  * @author senycorp
  */
-abstract public class BaseModel<E,T extends BaseModelList> extends ModifiableObservableListBase<E> {
+abstract public class BaseModel<E, T extends BaseModelList>
+        extends ModifiableObservableListBase<E> {
 
     /**
      * ObservableList
