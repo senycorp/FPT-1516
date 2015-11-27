@@ -1,6 +1,7 @@
 package controller;
 
 import component.view.Alert;
+import helper.IDGenerator;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -23,6 +24,10 @@ public class ControllerShop {
      */
     private ViewShop viewShop;
 
+    /**
+     * IDGenerator
+     */
+    private IDGenerator idGen;
     /**
      * Link model and view to controller
      *
@@ -86,7 +91,14 @@ public class ControllerShop {
         } else {
             // Create product
             Product p = new Product();
-
+            
+            // add ID to the Product
+            try {
+				p.setId(idGen.getLongId());
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+            
             /**
              * TODO: ID property is setted to millis.
              */
