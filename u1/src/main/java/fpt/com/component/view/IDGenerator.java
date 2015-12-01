@@ -55,6 +55,13 @@ public class IDGenerator {
         }
         return id++;
     }
+    
+    /**
+     * 
+     */
+    public void setId(long id) {
+    	this.id = id;
+    }
 
     /**
      * IDOverflow-Exception

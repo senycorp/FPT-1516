@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import fpt.com.SerializableStrategy;
 
 import java.io.IOException;
 
@@ -23,6 +24,11 @@ public class ControllerShop
         extends BaseController
         implements ModelableController, ViewableController {
 
+	/**
+	 * Strategy
+	 */
+	private SerializableStrategy strategy;
+	
     /**
      * Model
      */
@@ -90,10 +96,44 @@ public class ControllerShop
     }
 
     private void loadProducts() {
+    	if (this.view.comboBox.getValue() == null) {
+            System.out.println("select strategy first.");
+            return;
+        }
+        // clear the products list
+        model.getProducts().clear();
 
+        try {
+            Product product;
+            int i = 0;
+            long maxId = 0;
+            while ((product = (Product)strategy.readObject()) != null) {
+                model.doAdd(i++, product);
+                if (product.getId() > maxId) {
+                    maxId = product.getId();
+                }
+            }
+            // Make sure to generate unique IDs
+            idGen.setId(maxId);
+            System.out.println("Products loaded successfully.");
+        } catch (IOException openError) {
+            System.out.println("openError");
+            openError.printStackTrace();
+        } finally {
+            try {
+                strategy.close();
+            } catch (IOException closeError) {
+                System.out.println("closeError");
+                closeError.printStackTrace();
+            }
+        }
     }
 
     private void saveProducts() {
+    	if (this.view.comboBox.getValue() == null) {
+    		System.out.println("select strategy");
+    		return;
+    	}
         BinaryStrategy bs = new BinaryStrategy();
         ObservableList<Product> pl = this.getModel().getProducts();
 
@@ -121,6 +161,8 @@ public class ControllerShop
 
         // TODO: DELETE THIS
         this.test();
+        
+        this.strategy = new BinaryStrategy();
 
         // Set up eventhandler for add and delete Button
         view.addEventHandler(new EventHandler<ActionEvent>() {
