@@ -1,5 +1,6 @@
 package fpt.com.controller;
 
+import fpt.com.SerializableStrategy;
 import fpt.com.component.strategy.BinaryStrategy;
 import fpt.com.component.view.Alert;
 import fpt.com.component.view.IDGenerator;
@@ -13,7 +14,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import fpt.com.SerializableStrategy;
 
 import java.io.IOException;
 
@@ -56,6 +56,16 @@ public class ControllerShop
          */
         if (model.getProducts().get(rowIndex) != null) {
             model.doRemove(rowIndex);
+
+            if (model.getProducts().size() == 0) {
+                Alert.info("Serialization",
+                           "Deactivation of serialization",
+                           "Please notice that serialization of empty product lists is not allowed. \n" +
+                                   "Add some products to enable this feature again.").show();
+                view.saveButton.setDisable(true);
+            } else {
+                view.saveButton.setDisable(false);
+            }
         }
     }
 
@@ -92,57 +102,81 @@ public class ControllerShop
 
             // Add it to the model - FX will update the list automatically
             model.add(p);
+
+            this.view.saveButton.setDisable(false);
         }
     }
 
     private void loadProducts() {
-    	if (this.view.comboBox.getValue() == null) {
-            System.out.println("select strategy first.");
+        SerializableStrategy strategy = (SerializableStrategy)this.view.comboBox.getValue();
+
+        if (strategy == null) {
+            Alert.warning("Strategy not selected!", "Please make sure that you select a strategy first.",
+                          "You should choose a strategy first to deserialize your product list.").show();
             return;
         }
-        // clear the products list
-        model.getProducts().clear();
 
         try {
+            // Clear the products list
+            model.getProducts().clear();
             Product product;
             int i = 0;
-            long maxId = 0;
+            long lastId = 0;
             while ((product = (Product)strategy.readObject()) != null) {
                 model.doAdd(i++, product);
-                if (product.getId() > maxId) {
-                    maxId = product.getId();
-                }
+                lastId = product.getId();
             }
+
             // Make sure to generate unique IDs
-            idGen.setId(maxId);
-            System.out.println("Products loaded successfully.");
+            idGen.setId(lastId+1);
+
+            // TODO: Make an info tooltip here
         } catch (IOException openError) {
-            System.out.println("openError");
+            Alert.error("Error",
+                        "Unable to open output stream",
+                        "Please make sure that the resource file is readable and try again.").show();
             openError.printStackTrace();
         } finally {
             try {
                 strategy.close();
             } catch (IOException closeError) {
-                System.out.println("closeError");
+                Alert.error("Error",
+                            "Unable to close output stream",
+                            "Please make sure that the resource file is readable and allready existing on your harddisk.");
                 closeError.printStackTrace();
             }
         }
     }
 
     private void saveProducts() {
-    	if (this.view.comboBox.getValue() == null) {
-    		System.out.println("select strategy");
+        SerializableStrategy strategy = (SerializableStrategy)this.view.comboBox.getValue();
+
+    	if (strategy == null) {
+            Alert.warning("Strategy not selected!", "Please make sure that you select a strategy first.",
+                          "You should choose a strategy first to serialize your product list.").show();
     		return;
     	}
-        BinaryStrategy bs = new BinaryStrategy();
+
+        // Get products
         ObservableList<Product> pl = this.getModel().getProducts();
 
+        // Serialize each product with the choosen strategy
         for (fpt.com.Product p : pl) {
             try {
-                bs.writeObject(p);
+                strategy.writeObject(p);
             } catch (IOException e) {
+                Alert.warning("Error: Serializing object", "There was an error while serializing a product with the given strategy.",
+                              "Please make sure that the there are no rights conflicts " +
+                              "and the path is writable."
+                              ).show();
                 e.printStackTrace();
             }
+        }
+
+        try {
+            strategy.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

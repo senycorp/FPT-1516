@@ -5,47 +5,131 @@ import fpt.com.SerializableStrategy;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-/**
- * XMLStrategy
+/*
+ *  c) wie unterscheiden sich die arten der serialisierung?
+ * 	binaer und java beans sind analog bis auf encoder/output decoder/input (namen anders)
+ * 	- statt transient(binary) - PropertyDescriptor(beans)
+ * 	d) 	vorteile:
+ * 		beans - ist leserlicher
+ * 		beans - deserialisierung trotz fehlender methoden moeglich(NoSuchMethodException)
+ * 		binary - keine setter/getter pflicht
+ * 		binary schwer zu lesen(sicherer)		
+ * 
+ * 		nachteile:
+ * 		beans ist leserlicher (sicherheits risiko)
+ * 		binary schwer zu lesen
  */
-public class XMLStrategy
-        implements SerializableStrategy {
 
-    private String destinationFilename = "products.xml";
+public class XMLStrategy implements SerializableStrategy {
+	// alle streams sozusagen aufbauen zum benutzen
+	private OutputStream outputStream = null;
+	private XMLEncoder xmlEncoder = null;
 
-    @Override
-    public Product readObject() throws IOException {
-        Product readObject = null;
-        try (FileInputStream fi = new FileInputStream("d . xml ");
-             XMLDecoder decoder = new XMLDecoder(fi)) {
-            readObject = (Product) decoder.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+	private InputStream inputStream = null;
+	private XMLDecoder xmlDecoder = null;
 
-        return readObject;
-    }
+	private String FILENAME = "products.xml";
+	
+	private void openInputStream(String... pathAsString) throws IOException{
+		if (pathAsString != null && pathAsString.length > 0
+				&& pathAsString[0] != null) {
+			Path path = Paths.get("", pathAsString);
 
-    @Override
-    public void writeObject(Product obj) throws IOException {
-        try (FileOutputStream fo = new FileOutputStream(destinationFilename);
-             XMLEncoder encoder = new XMLEncoder(fo)) {
-            encoder.writeObject(obj);
-            encoder.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+			if (path != null) {
+				if (Files.exists(path)) {
+					byte[] data = Files.readAllBytes(path);
+					InputStream in = new ByteArrayInputStream(data);
+					open(in, null);
+				}
+			}
+		}
+	}
+	
+	private void openOutputStream(String... pathAsString) throws IOException{
+		if (pathAsString != null && pathAsString.length > 0
+				&& pathAsString[0] != null) {
+			Path path = Paths.get("", pathAsString);
 
-    @Override
-    public void close() throws IOException {
+			if (path != null) {
+				OutputStream out = Files.newOutputStream(path);
+				open(null, out);
+			}
+		}
+	}
 
-    }
+	public Product readObject() throws IOException {
+		Product myProduct = null;
 
-    @Override
-    public void open(InputStream input, OutputStream output) throws IOException {
+		if (this.inputStream == null || this.xmlDecoder == null) {
+			this.openInputStream(FILENAME);
+		}
 
-    }
+		try {
+			myProduct = (Product) xmlDecoder.readObject();
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println("Ende der XML-Datei erreicht");
+			// Unset input stream to begin from start of file again
+			inputStream = null;
+			xmlDecoder = null;
+		}
+
+		return myProduct;
+	}
+
+	public void writeObject(Product obj) throws IOException {
+		if (this.outputStream == null || this.xmlEncoder == null) {
+			this.openOutputStream(FILENAME);
+		}
+
+		xmlEncoder.writeObject(obj);
+		xmlEncoder.flush();
+	}
+
+	public void close() throws IOException {
+		if (xmlEncoder != null) {
+			xmlEncoder.close();
+			xmlEncoder = null;
+		}
+
+		if (xmlDecoder != null) {
+			xmlDecoder.close();
+			xmlDecoder = null;
+		}
+
+		if (outputStream != null) {
+			outputStream.close();
+			outputStream = null;
+		}
+
+		if (inputStream != null) {
+			inputStream.close();
+			inputStream = null;
+		}
+	}
+
+	@Override
+	public void open(InputStream input, OutputStream output) throws IOException {
+		if (input != null) {
+			this.inputStream = input;
+			this.xmlDecoder = new XMLDecoder(this.inputStream);
+		}
+
+		if (output != null) {
+			this.outputStream = output;
+			this.xmlEncoder = new XMLEncoder(this.outputStream);
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "XMLStrategy";
+	}
 }

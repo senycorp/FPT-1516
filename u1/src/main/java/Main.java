@@ -24,10 +24,9 @@ public class Main
         ControllerManager controllerManager = ControllerManager.getInstance();
 
         // Set up controller
-        BaseController c = new ControllerCustomer();
+        BaseController c = new ControllerShop();
         controllerManager.put(c.getID(), c);
-        c = new ControllerShop();
-
+        c = new ControllerCustomer();
         controllerManager.put(c.getID(), c);
 
         return controllerManager;

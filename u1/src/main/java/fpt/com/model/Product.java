@@ -1,6 +1,12 @@
 package fpt.com.model;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import com.thoughtworks.xstream.annotations.XStreamConverter;
+import fpt.com.component.converter.DoubleConverter;
+import fpt.com.component.converter.IntegerConverter;
+import fpt.com.component.converter.LongConverter;
+import fpt.com.component.converter.StringConverter;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
@@ -27,21 +33,30 @@ public class Product
     /**
      * Name
      */
+    @XStreamAlias("name")
+    @XStreamConverter(StringConverter.class)
     private SimpleStringProperty name = new SimpleStringProperty();
 
     /**
      * ID
      */
+    @XStreamAlias("id")
+    @XStreamConverter(LongConverter.class)
+    @XStreamAsAttribute
     private SimpleLongProperty id = new SimpleLongProperty();
 
     /**
      * Price
      */
+    @XStreamAlias("preis")
+    @XStreamConverter(DoubleConverter.class)
     private SimpleDoubleProperty price = new SimpleDoubleProperty();
 
     /**
      * Quantity
      */
+    @XStreamAlias("anzahl")
+    @XStreamConverter(IntegerConverter.class)
     private SimpleIntegerProperty quantity = new SimpleIntegerProperty();
 
     /**
