@@ -38,6 +38,7 @@ abstract public class Application
                 // Create GUI: Scene, Stage for Customer
                 Stage stage = new Stage();
                 Scene scene = new Scene(controllerManager.get(c).getView());
+                controllerManager.get(c).setStage(stage).setScene(scene);
                 stage.setScene(scene);
                 stage.setX(0);
                 stage.show();

@@ -72,11 +72,13 @@ public class XMLStrategy extends BaseStrategy
 		try {
 			myProduct = (Product) xmlDecoder.readObject();
 		} catch (ArrayIndexOutOfBoundsException e) {
-			System.out.println("Ende der XML-Datei erreicht");
-
-			// Unset input stream to begin from start of file again
-			is = null;
-			xmlDecoder = null;
+			/**
+			 * End of file reached
+			 */
+		} catch (NullPointerException e) {
+			/**
+			 * There is nothing to load. Maybe the file does not exist or is empty.
+			 */
 		}
 
 		return myProduct;

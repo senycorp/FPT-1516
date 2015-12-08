@@ -2,6 +2,8 @@ package fpt.com.core.controller;
 
 import fpt.com.core.model.BaseModel;
 import fpt.com.core.view.BaseView;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 /**
  * BaseController
@@ -19,6 +21,16 @@ abstract public class BaseController {
      * View
      */
     protected BaseView view;
+
+    /**
+     * Stage
+     */
+    protected Stage stage;
+
+    /**
+     * Scene
+     */
+    protected Scene scene;
 
     /**
      * Constructor
@@ -106,6 +118,45 @@ abstract public class BaseController {
      */
     public BaseController setView(BaseView view) {
         this.view = view;
+
+        return this;
+    }
+
+    /**
+     * Get Stage
+     * @return
+     */
+    public Stage getStage() {
+        return stage;
+    }
+
+    /**
+     * Set stage
+     *
+     * @param stage
+     */
+    public BaseController setStage(Stage stage) {
+        this.stage = stage;
+
+        return this;
+    }
+
+    /**
+     * Get Scene
+     *
+     * @return
+     */
+    public Scene getScene() {
+        return scene;
+    }
+
+    /**
+     * Set scene
+     *
+     * @param scene
+     */
+    public BaseController setScene(Scene scene) {
+        this.scene = scene;
 
         return this;
     }

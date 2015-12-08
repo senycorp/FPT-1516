@@ -113,9 +113,13 @@ abstract public class BaseStrategy {
             System.out.println("Binary: Klasse nicht gefunden");
             e.printStackTrace();
         } catch (EOFException e){
-            System.out.println("Ende der Datei erreicht");
+            /**
+             * End of file reached
+             */
         } catch (NullPointerException e) {
-            System.out.println("Es gibt nichts zum Laden");
+            /**
+             * There is nothing to load. Maybe the file does not exist or is empty.
+             */
         }
 
         return myProduct;

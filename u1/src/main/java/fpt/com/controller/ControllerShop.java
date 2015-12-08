@@ -1,9 +1,9 @@
 package fpt.com.controller;
 
 import fpt.com.SerializableStrategy;
-import fpt.com.component.strategy.BinaryStrategy;
 import fpt.com.component.view.Alert;
 import fpt.com.component.view.IDGenerator;
+import fpt.com.component.view.Tooltip;
 import fpt.com.core.controller.BaseController;
 import fpt.com.core.controller.ModelableController;
 import fpt.com.core.controller.ViewableController;
@@ -24,11 +24,6 @@ public class ControllerShop
         extends BaseController
         implements ModelableController, ViewableController {
 
-	/**
-	 * Strategy
-	 */
-	private SerializableStrategy strategy;
-	
     /**
      * Model
      */
@@ -50,11 +45,13 @@ public class ControllerShop
     private void deleteProduct() {
         // Delete product and update list
         int rowIndex = view.getTable().getSelectionModel().getSelectedIndex();
-
+        String productName = "";
         /**
          * Check for filled index before trying to delete to prevent errors and exceptions
          */
         if (model.getProducts().get(rowIndex) != null) {
+            productName = model.getProducts().get(rowIndex).getName();
+
             model.doRemove(rowIndex);
 
             if (model.getProducts().size() == 0) {
@@ -66,6 +63,8 @@ public class ControllerShop
             } else {
                 view.saveButton.setDisable(false);
             }
+
+            Tooltip.disappearingTooltip("Product \"" + productName + "\" removed successfully!");
         }
     }
 
@@ -96,6 +95,8 @@ public class ControllerShop
 
                 // Add it to the model - FX will update the list automatically
                 model.add(p);
+
+                Tooltip.disappearingTooltip("Product \""+p.getName()+"\" added successfully!");
             } catch(IDGenerator.IDOverflow ex) {
                 Alert.error("Product creation not possible",
                             "Unable to add product",
@@ -132,7 +133,14 @@ public class ControllerShop
             // Make sure to generate unique IDs
             idGen.setId(lastId+1);
 
-            // TODO: Make an info tooltip here
+            Tooltip.disappearingTooltip("Products loaded successfully!");
+
+            // Activate save button again
+            if (i > 0) {
+                view.saveButton.setDisable(false);
+            } else {
+                view.saveButton.setDisable(true);
+            }
         } catch (IOException openError) {
             Alert.error("Error",
                         "Unable to open output stream",
@@ -172,6 +180,8 @@ public class ControllerShop
                               "and the path is writable."
                               ).show();
                 e.printStackTrace();
+
+                return;
             }
         }
 
@@ -180,6 +190,8 @@ public class ControllerShop
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        Tooltip.disappearingTooltip("Products saved successfully!");
     }
 
     @Override
@@ -198,8 +210,6 @@ public class ControllerShop
         // TODO: DELETE THIS
         this.test();
         
-        this.strategy = new BinaryStrategy();
-
         // Set up eventhandler for add and delete Button
         view.addEventHandler(new EventHandler<ActionEvent>() {
 
