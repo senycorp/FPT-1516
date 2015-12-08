@@ -87,21 +87,23 @@ public class ControllerShop
             // Create product
             Product p = new Product();
 
-            // add ID to the Product
             try {
+                // Set product properties
                 p.setId(idGen.getId());
+                p.setName(view.getName());
+                p.setPrice(price);
+                p.setQuantity(quantity);
+
+                // Add it to the model - FX will update the list automatically
+                model.add(p);
+            } catch(IDGenerator.IDOverflow ex) {
+                Alert.error("Product creation not possible",
+                            "Unable to add product",
+                            "The maximum id is reached. You can not create more products anymore.").show();
             } catch (Exception ex) {
                 // TODO: What should we do in this case?!?!?!
                 ex.printStackTrace();
             }
-
-            // Set product properties
-            p.setName(view.getName());
-            p.setPrice(price);
-            p.setQuantity(quantity);
-
-            // Add it to the model - FX will update the list automatically
-            model.add(p);
 
             this.view.saveButton.setDisable(false);
         }

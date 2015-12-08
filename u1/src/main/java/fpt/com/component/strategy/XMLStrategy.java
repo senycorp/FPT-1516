@@ -8,21 +8,36 @@ import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.*;
 
-/*
- *  c) wie unterscheiden sich die arten der serialisierung?
- * 	binaer und java beans sind analog bis auf encoder/output decoder/input (namen anders)
- * 	- statt transient(binary) - PropertyDescriptor(beans)
- * 	d) 	vorteile:
- * 		beans - ist leserlicher
- * 		beans - deserialisierung trotz fehlender methoden moeglich(NoSuchMethodException)
- * 		binary - keine setter/getter pflicht
- * 		binary schwer zu lesen(sicherer)		
- * 
- * 		nachteile:
- * 		beans ist leserlicher (sicherheits risiko)
- * 		binary schwer zu lesen
+/**
+ * Aufgabe 3
+ *
+ * c: Binäre- und Java-Beans-Serialisierung sind größtenteils gleich. Lediglich die Ablage der serialisierten Objekte
+ * ist binär oder im XML-Format. Dieser Unterschied wird durch die Verwendung eines anderen Encoders/Decoders erreicht.
+ * Während die binäre Serialisierung ObjectOutputStream/ObjectInputStream verwendet, wrappt die Beans-Serialisierung diese
+ * Streams nocheinmal in XMLDecoder/XMLEncoder. Des weiteren muss für die XML-Serialisierung sichergestellt werden, dass
+ * einige Konventionen eingehalten werden. Dazu zählt, dass jede Property über zugehörige Getter/Setter-Methoden verfügt.
+ * Weiter ist ein No-Argument-Konstruktor notwendig.
+ *
+ * Für die Sichtbarkeit von bestimmten Properties verwendet Beans nicht das Keyword "transient" sondern den PropertyDescriptor.
+ *
+ * d: Vorteile "Beans": leserlich,
+ * 						Deserialisierung,
+ * 						Event-Listener "PropertyChangeListener"
+ * 						Portabilität
+ *
+ * Nachteile "Beans: 	Konventionspflicht
+ * 						Lesbarkeit birgt ein Sicherheitsrisiko
+ *
+ * Vorteile "Binary":	Keine Konventionspflicht
+ * 						Erhöhte Sicherheit durch unlesbares Format
+ *
+ * Nachteile "Binary":	Nicht lesbar
+ *
  */
 
+/**
+ * XMLStrategy
+ */
 public class XMLStrategy extends BaseStrategy
 		implements SerializableStrategy {
 

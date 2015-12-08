@@ -57,7 +57,7 @@ public class IDGenerator {
     }
     
     /**
-     * 
+     * Set starting point for ID
      */
     public void setId(long id) {
     	this.id = id;
