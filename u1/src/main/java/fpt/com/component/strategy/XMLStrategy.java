@@ -2,16 +2,11 @@ package fpt.com.component.strategy;
 
 import fpt.com.Product;
 import fpt.com.SerializableStrategy;
+import fpt.com.core.component.BaseStrategy;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.*;
 
 /*
  *  c) wie unterscheiden sich die arten der serialisierung?
@@ -28,71 +23,69 @@ import java.nio.file.Paths;
  * 		binary schwer zu lesen
  */
 
-public class XMLStrategy implements SerializableStrategy {
-	// alle streams sozusagen aufbauen zum benutzen
-	private OutputStream outputStream = null;
+public class XMLStrategy extends BaseStrategy
+		implements SerializableStrategy {
+
+	/**
+	 * XML-Encoder
+	 */
 	private XMLEncoder xmlEncoder = null;
 
-	private InputStream inputStream = null;
+	/**
+	 * XML-Decoder
+	 */
 	private XMLDecoder xmlDecoder = null;
 
-	private String FILENAME = "products.xml";
-	
-	private void openInputStream(String... pathAsString) throws IOException{
-		if (pathAsString != null && pathAsString.length > 0
-				&& pathAsString[0] != null) {
-			Path path = Paths.get("", pathAsString);
-
-			if (path != null) {
-				if (Files.exists(path)) {
-					byte[] data = Files.readAllBytes(path);
-					InputStream in = new ByteArrayInputStream(data);
-					open(in, null);
-				}
-			}
-		}
-	}
-	
-	private void openOutputStream(String... pathAsString) throws IOException{
-		if (pathAsString != null && pathAsString.length > 0
-				&& pathAsString[0] != null) {
-			Path path = Paths.get("", pathAsString);
-
-			if (path != null) {
-				OutputStream out = Files.newOutputStream(path);
-				open(null, out);
-			}
-		}
+	@Override
+	public String getDestinationFilename() {
+		return "products.xml";
 	}
 
+	/**
+	 * Read object from xml
+	 *
+	 * @return
+	 * @throws IOException
+	 */
 	public Product readObject() throws IOException {
 		Product myProduct = null;
 
-		if (this.inputStream == null || this.xmlDecoder == null) {
-			this.openInputStream(FILENAME);
+		if (this.is == null || this.xmlDecoder == null) {
+			this.openInputStream(this.getDestinationFilename());
 		}
 
 		try {
 			myProduct = (Product) xmlDecoder.readObject();
 		} catch (ArrayIndexOutOfBoundsException e) {
 			System.out.println("Ende der XML-Datei erreicht");
+
 			// Unset input stream to begin from start of file again
-			inputStream = null;
+			is = null;
 			xmlDecoder = null;
 		}
 
 		return myProduct;
 	}
 
+	/**
+	 * Write object
+	 *
+	 * @param obj the object for serialization
+	 * @throws IOException
+	 */
 	public void writeObject(Product obj) throws IOException {
-		if (this.outputStream == null || this.xmlEncoder == null) {
-			this.openOutputStream(FILENAME);
+		if (this.os == null || this.xmlEncoder == null) {
+			this.openOutputStream(this.getDestinationFilename());
 		}
 
 		xmlEncoder.writeObject(obj);
 		xmlEncoder.flush();
 	}
 
+	/**
+	 * Close all opened streams
+	 * @throws IOException
+	 */
 	public void close() throws IOException {
 		if (xmlEncoder != null) {
 			xmlEncoder.close();
@@ -104,27 +97,20 @@ public class XMLStrategy implements SerializableStrategy {
 			xmlDecoder = null;
 		}
 
-		if (outputStream != null) {
-			outputStream.close();
-			outputStream = null;
-		}
-
-		if (inputStream != null) {
-			inputStream.close();
-			inputStream = null;
-		}
+		super.close();
 	}
 
 	@Override
 	public void open(InputStream input, OutputStream output) throws IOException {
-		if (input != null) {
-			this.inputStream = input;
-			this.xmlDecoder = new XMLDecoder(this.inputStream);
+		super.open(input, output);
+
+		if (this.is != null) {
+			this.xmlDecoder = new XMLDecoder(this.is);
 		}
 
-		if (output != null) {
-			this.outputStream = output;
-			this.xmlEncoder = new XMLEncoder(this.outputStream);
+		if (this.os != null) {
+			this.os = output;
+			this.xmlEncoder = new XMLEncoder(this.os);
 		}
 	}
 
