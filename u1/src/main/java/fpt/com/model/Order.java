@@ -11,7 +11,6 @@ public class Order
 
     @Override
     public Iterator<Product> iterator() {
-        // TODO Auto-generated method stub
         return null;
     }
 

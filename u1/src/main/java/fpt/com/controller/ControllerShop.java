@@ -207,9 +207,6 @@ public class ControllerShop
         view.getTable().setCache(false);
         view.getTable().setItems(model.getProducts());
 
-        // TODO: DELETE THIS
-        this.test();
-        
         // Set up eventhandler for add and delete Button
         view.addEventHandler(new EventHandler<ActionEvent>() {
 
@@ -236,6 +233,9 @@ public class ControllerShop
         });
     }
 
+    /**
+     * Fill list with generated products
+     */
     public void test() {
         for (int i = 0 ; i < 10 ; i++) {
             // Create product
