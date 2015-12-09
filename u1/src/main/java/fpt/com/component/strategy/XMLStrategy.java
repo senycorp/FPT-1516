@@ -2,7 +2,8 @@ package fpt.com.component.strategy;
 
 import fpt.com.Product;
 import fpt.com.SerializableStrategy;
-import fpt.com.core.component.BaseStrategy;
+import fpt.com.component.view.Alert;
+import fpt.com.core.component.strategy.BaseStrategy;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
@@ -79,6 +80,9 @@ public class XMLStrategy extends BaseStrategy
 			/**
 			 * There is nothing to load. Maybe the file does not exist or is empty.
 			 */
+			Alert.info("Serialization not ready",
+					   "Unable to load data.",
+					   "There are no serialized objects at this moment. Please save products first and try again").show();
 		}
 
 		return myProduct;

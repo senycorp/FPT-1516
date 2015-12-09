@@ -1,6 +1,6 @@
 package fpt.com.component.strategy;
 
-import fpt.com.core.component.BaseStrategy;
+import fpt.com.core.component.strategy.BaseStrategy;
 
 /**
  * Aufgabe 2

@@ -207,6 +207,9 @@ public class ControllerShop
         view.getTable().setCache(false);
         view.getTable().setItems(model.getProducts());
 
+        // Deactivate save-button to prevent serialization of empty product lists
+        view.saveButton.setDisable(true);
+
         // Set up eventhandler for add and delete Button
         view.addEventHandler(new EventHandler<ActionEvent>() {
 

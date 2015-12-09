@@ -1,6 +1,7 @@
-package fpt.com.core.component;
+package fpt.com.core.component.strategy;
 
 import fpt.com.Product;
+import fpt.com.component.view.Alert;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -120,6 +121,9 @@ abstract public class BaseStrategy {
             /**
              * There is nothing to load. Maybe the file does not exist or is empty.
              */
+            Alert.info("Serialization not ready",
+                       "Unable to load data.",
+                       "There are no serialized objects at this moment. Please save products first and try again").show();
         }
 
         return myProduct;

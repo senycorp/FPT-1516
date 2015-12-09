@@ -4,7 +4,7 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import fpt.com.ExternalizableReflectionConverter;
 import fpt.com.SerializableStrategy;
-import fpt.com.core.component.BaseStrategy;
+import fpt.com.core.component.strategy.BaseStrategy;
 
 import java.io.IOException;
 import java.io.InputStream;
