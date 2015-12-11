@@ -1,0 +1,27 @@
+<Waren>
+  <Ware id="000001">
+    <name>98</name>
+    <preis>98.00</preis>
+    <anzahl>98</anzahl>
+  </Ware>
+  <Ware id="000002">
+    <name>98</name>
+    <preis>98.00</preis>
+    <anzahl>98</anzahl>
+  </Ware>
+  <Ware id="000003">
+    <name>98</name>
+    <preis>98.00</preis>
+    <anzahl>98</anzahl>
+  </Ware>
+  <Ware id="000004">
+    <name>98</name>
+    <preis>98.00</preis>
+    <anzahl>98</anzahl>
+  </Ware>
+  <Ware id="000005">
+    <name>98</name>
+    <preis>98.00</preis>
+    <anzahl>98</anzahl>
+  </Ware>
+</Waren>
