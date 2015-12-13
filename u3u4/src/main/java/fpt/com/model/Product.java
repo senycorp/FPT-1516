@@ -12,7 +12,10 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
+import org.apache.openjpa.persistence.Persistent;
+import org.apache.openjpa.persistence.jdbc.Strategy;
 
+import javax.persistence.*;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
@@ -20,6 +23,8 @@ import java.io.ObjectOutput;
 /**
  * Model: Product
  */
+@Entity()
+@Table(name="products")
 @XStreamAlias("Ware")
 public class Product
         implements fpt.com.Product, java.io.Externalizable {
@@ -33,13 +38,33 @@ public class Product
     /**
      * Name
      */
+    @Persistent
+    @Strategy("fpt.com.db.StringPropertyValueHandler")
     @XStreamAlias("name")
     @XStreamConverter(StringConverter.class)
     private SimpleStringProperty name = new SimpleStringProperty();
 
+
+
+    @Id
+    @GeneratedValue ( strategy = GenerationType.IDENTITY, generator="products_SEQ " )
+    @Column(name="id")
+    private Long idDB;
+
+    public Long getIdDB() {
+        return this.idDB;
+    }
+
+    public void setIdDB(Long id) {
+        this.idDB = id;
+        this.id.set(this.idDB);
+    }
+
     /**
      * ID
      */
+    @Persistent
+    @Strategy("fpt.com.db.LongPropertyValueHandler")
     @XStreamAlias("id")
     @XStreamConverter(LongConverter.class)
     @XStreamAsAttribute
@@ -48,6 +73,8 @@ public class Product
     /**
      * Price
      */
+    @Persistent
+    @Strategy("fpt.com.db.DoublePropertyValueHandler")
     @XStreamAlias("preis")
     @XStreamConverter(DoubleConverter.class)
     private SimpleDoubleProperty price = new SimpleDoubleProperty();
@@ -55,6 +82,8 @@ public class Product
     /**
      * Quantity
      */
+    @Persistent
+    @Strategy("fpt.com.db.IntegerPropertyValueHandler")
     @XStreamAlias("anzahl")
     @XStreamConverter(IntegerConverter.class)
     private SimpleIntegerProperty quantity = new SimpleIntegerProperty();
@@ -75,7 +104,8 @@ public class Product
      * @param quantity
      */
     public Product(long id, String name, double price, int quantity) {
-        this.id.set(id);
+        System.out.println(id);
+        this.id.set(this.getIdDB());
         this.name.set(name);
         this.price.set(price);
         this.quantity.set(quantity);

@@ -3,7 +3,7 @@
 .log
 version.ini
 /.metadata/*
-*/.idea
+.idea
 */.settings
 */products.*
 */productsXStream.xml

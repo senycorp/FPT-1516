@@ -2,7 +2,6 @@ package fpt.com.controller;
 
 import fpt.com.SerializableStrategy;
 import fpt.com.component.view.Alert;
-import fpt.com.component.view.IDGenerator;
 import fpt.com.component.view.Tooltip;
 import fpt.com.core.controller.BaseController;
 import fpt.com.core.controller.ModelableController;
@@ -14,8 +13,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-
 import java.io.IOException;
+//import fpt.com.component.view.IDGenerator;
 
 /**
  * ControllerShop
@@ -37,7 +36,7 @@ public class ControllerShop
     /**
      * IDGenerator
      */
-    private IDGenerator idGen;
+    //private IDGenerator idGen;
 
     /**
      * DeleteButton Handler
@@ -88,7 +87,9 @@ public class ControllerShop
 
             try {
                 // Set product properties
-                p.setId(idGen.getId());
+
+                // This is not needed anymore by using a database
+                // p.setId(idGen.getId());
                 p.setName(view.getName());
                 p.setPrice(price);
                 p.setQuantity(quantity);
@@ -97,14 +98,16 @@ public class ControllerShop
                 model.add(p);
 
                 Tooltip.disappearingTooltip("Product \""+p.getName()+"\" added successfully!");
-            } catch(IDGenerator.IDOverflow ex) {
-                Alert.error("Product creation not possible",
-                            "Unable to add product",
-                            "The maximum id is reached. You can not create more products anymore.").show();
             } catch (Exception ex) {
                 // TODO: What should we do in this case?!?!?!
                 ex.printStackTrace();
             }
+            // This is not needed anymore by using a database
+            /*catch(IDGenerator.IDOverflow ex) {
+                Alert.error("Product creation not possible",
+                            "Unable to add product",
+                            "The maximum id is reached. You can not create more products anymore.").show();
+            } */
 
             this.view.saveButton.setDisable(false);
         }
@@ -124,14 +127,15 @@ public class ControllerShop
             model.getProducts().clear();
             Product product;
             int i = 0;
-            long lastId = 0;
+            //long lastId = 0;
+
             while ((product = (Product)strategy.readObject()) != null) {
                 model.doAdd(i++, product);
-                lastId = product.getId();
+                //lastId = product.getId();
             }
 
             // Make sure to generate unique IDs
-            idGen.setId(lastId+1);
+            //idGen.setId(lastId+1);
 
             Tooltip.disappearingTooltip("Products loaded successfully!");
 
@@ -201,7 +205,7 @@ public class ControllerShop
         this.model = (ModelShop) this.getModel();
 
         // Create ID-Generator
-        this.idGen = IDGenerator.getInstance();
+        //this.idGen = IDGenerator.getInstance();
 
         // Set items for the ProductsTableView
         view.getTable().setCache(false);
@@ -234,32 +238,6 @@ public class ControllerShop
                 }
             }
         });
-    }
-
-    /**
-     * Fill list with generated products
-     */
-    public void test() {
-        for (int i = 0 ; i < 10 ; i++) {
-            // Create product
-            Product p = new Product();
-
-            // add ID to the Product
-            try {
-                p.setId(idGen.getId());
-            } catch (Exception ex) {
-                // TODO: What should we do in this case?!?!?!
-                ex.printStackTrace();
-            }
-
-            // Set product properties
-            p.setName("Product "+i);
-            p.setPrice(100);
-            p.setQuantity(100);
-
-            // Add it to the model - FX will update the list automatically
-            model.add(p);
-        }
     }
 
     @Override
