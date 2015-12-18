@@ -47,7 +47,7 @@ public class Product
 
 
     @Id
-    @GeneratedValue ( strategy = GenerationType.IDENTITY, generator="products_SEQ " )
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="id")
     private Long idDB;
 
@@ -104,8 +104,6 @@ public class Product
      * @param quantity
      */
     public Product(long id, String name, double price, int quantity) {
-        System.out.println(id);
-        this.id.set(this.getIdDB());
         this.name.set(name);
         this.price.set(price);
         this.quantity.set(quantity);
@@ -118,7 +116,7 @@ public class Product
 
     @Override
     public void setId(long id) {
-        this.id.set(id);
+        this.setIdDB(id);
     }
 
     @Override

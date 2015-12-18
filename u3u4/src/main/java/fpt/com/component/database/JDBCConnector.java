@@ -101,8 +101,8 @@ public class JDBCConnector extends BaseConnector {
     }
 
     @Override
-    public int insert(String name, double price, int quantity) {
-        int lastInsertedID = -1;
+    public long insert(String name, double price, int quantity) {
+        long lastInsertedID = -1;
 
         try (PreparedStatement pstmt = this.getConnection().prepareStatement(
                 "INSERT INTO products(name,price,quantity) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
@@ -129,8 +129,9 @@ public class JDBCConnector extends BaseConnector {
     }
 
     @Override
-    public int insert(fpt.com.Product product) {
-        return this.insert(product.getName(), product.getPrice(), product.getQuantity());
+    public void insert(fpt.com.Product product) {
+        long id = this.insert(product.getName(), product.getPrice(), product.getQuantity());
+        product.setId(id);
     }
 
     @Override

@@ -14,7 +14,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import java.io.IOException;
-//import fpt.com.component.view.IDGenerator;
 
 /**
  * ControllerShop
@@ -32,11 +31,6 @@ public class ControllerShop
      * View
      */
     protected ViewShop view;
-
-    /**
-     * IDGenerator
-     */
-    //private IDGenerator idGen;
 
     /**
      * DeleteButton Handler
@@ -89,7 +83,6 @@ public class ControllerShop
                 // Set product properties
 
                 // This is not needed anymore by using a database
-                // p.setId(idGen.getId());
                 p.setName(view.getName());
                 p.setPrice(price);
                 p.setQuantity(quantity);
@@ -102,12 +95,6 @@ public class ControllerShop
                 // TODO: What should we do in this case?!?!?!
                 ex.printStackTrace();
             }
-            // This is not needed anymore by using a database
-            /*catch(IDGenerator.IDOverflow ex) {
-                Alert.error("Product creation not possible",
-                            "Unable to add product",
-                            "The maximum id is reached. You can not create more products anymore.").show();
-            } */
 
             this.view.saveButton.setDisable(false);
         }
@@ -133,9 +120,6 @@ public class ControllerShop
                 model.doAdd(i++, product);
                 //lastId = product.getId();
             }
-
-            // Make sure to generate unique IDs
-            //idGen.setId(lastId+1);
 
             Tooltip.disappearingTooltip("Products loaded successfully!");
 
@@ -203,9 +187,6 @@ public class ControllerShop
         // Cast view and model
         this.view = (ViewShop) this.getView();
         this.model = (ModelShop) this.getModel();
-
-        // Create ID-Generator
-        //this.idGen = IDGenerator.getInstance();
 
         // Set items for the ProductsTableView
         view.getTable().setCache(false);

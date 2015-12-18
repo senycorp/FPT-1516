@@ -20,7 +20,7 @@ abstract public class BaseConnector {
      * @param quantity
      * @return
      */
-    public abstract int insert(String name, double price, int quantity);
+    public abstract long insert(String name, double price, int quantity);
 
     /**
      * Create a new product entry in database
@@ -28,7 +28,7 @@ abstract public class BaseConnector {
      * @param product
      * @return
      */
-    public abstract int insert(fpt.com.Product product);
+    public abstract void insert(fpt.com.Product product);
 
     /**
      * Get product by id

@@ -26,7 +26,8 @@ import java.util.List;
 /**
  * OpenJPAConnector
  */
-public class JPAConnector extends BaseConnector{
+public class JPAConnector extends BaseConnector {
+
     /**
      * Singleton-Holder
      */
@@ -108,7 +109,7 @@ public class JPAConnector extends BaseConnector{
         return c;
     }
 
-    public int insert(String name, double price, int quantity) {
+    public long insert(String name, double price, int quantity) {
         int lastInsertedID = -1;
 
         Product product = new Product(0, name, price, quantity);
@@ -121,11 +122,12 @@ public class JPAConnector extends BaseConnector{
 
         this.close();
 
-        return  java.lang.Math.toIntExact(product.getId());
+        return  product.getId();
     }
 
-    public int insert(fpt.com.Product product) {
-        return this.insert(product.getName(), product.getPrice(), product.getQuantity());
+    public void insert(fpt.com.Product product) {
+        long id = this.insert(product.getName(), product.getPrice(), product.getQuantity());
+        product.setId(id);
     }
 
     public Product read(long id) {
@@ -165,7 +167,7 @@ public class JPAConnector extends BaseConnector{
      * @return
      */
     public boolean isConnected() {
-        if (this.entityManager == null || this.entityManagerFactory == null )
+        if (this.entityManager == null || this.entityManagerFactory == null || !this.entityManager.isOpen() )
             return false;
 
         return true;
