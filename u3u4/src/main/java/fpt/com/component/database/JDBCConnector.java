@@ -3,6 +3,7 @@ package fpt.com.component.database;
 import fpt.com.core.component.database.BaseConnector;
 import fpt.com.model.Product;
 
+import java.io.IOException;
 import java.sql.*;
 
 /**
@@ -32,8 +33,18 @@ public class JDBCConnector extends BaseConnector {
     /**
      * Constructor
      */
-    private JDBCConnector() {
+    public JDBCConnector() {
         // Nothing to do
+    	this.getConnection();
+    }
+    
+    /**
+     * needed for the Combobox
+     * @return
+     */
+    @Override
+    public String toString() {
+    	return "JDBC-Connection";
     }
 
     /**
@@ -116,6 +127,7 @@ public class JDBCConnector extends BaseConnector {
 
             if (rs.next()) {
                 lastInsertedID = rs.getInt(1);
+                return lastInsertedID;
             }
 
             rs.close();
@@ -236,7 +248,7 @@ public class JDBCConnector extends BaseConnector {
      * @return
      */
     public String getUrl() {
-        return "jdbc:postgresql://localhost/shop";
+        return "jdbc:postgresql://java.is.uni-due.de/ws1011";
     }
 
     /**
@@ -245,7 +257,7 @@ public class JDBCConnector extends BaseConnector {
      * @return
      */
     public String getUsername() {
-        return "postgres";
+        return "ws1011";
     }
 
     /**
@@ -254,6 +266,24 @@ public class JDBCConnector extends BaseConnector {
      * @return
      */
     public String getPassword() {
-        return "postgres";
+        return "ftpw10";
     }
+
+	@Override
+	public fpt.com.Product readObject() throws IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void writeObject(fpt.com.Product obj) throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void open() throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
 }

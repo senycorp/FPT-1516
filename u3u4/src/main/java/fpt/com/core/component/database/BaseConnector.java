@@ -1,6 +1,7 @@
 package fpt.com.core.component.database;
 
 import fpt.com.component.database.JPAConnector;
+import fpt.com.db.AbstractDatabaseStrategy;
 import fpt.com.model.Product;
 
 import java.sql.Connection;
@@ -10,7 +11,7 @@ import java.sql.SQLException;
 /**
  * BaseConnector
  */
-abstract public class BaseConnector {
+abstract public class BaseConnector extends AbstractDatabaseStrategy {
 
     /**
      * Create a new product entry in database
