@@ -6,8 +6,6 @@ import fpt.com.core.component.database.BaseConnector;
 import fpt.com.db.AbstractDatabaseStrategy;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 /**
  * DatabaseStrategy
@@ -26,12 +24,9 @@ public class DatabaseStrategy extends AbstractDatabaseStrategy
 
     @Override
     public void open() throws IOException {
-        // Nothing to do
-    }
-
-    @Override
-    public void open(InputStream input, OutputStream output) throws IOException {
-        // Nothing to do
+        /**
+         * Nothing to do here. Connection will be handled by the connector.
+         */
     }
 
     @Override

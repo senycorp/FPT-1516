@@ -1,7 +1,6 @@
 package fpt.com.view;
 
 import fpt.com.Product;
-import fpt.com.component.database.JDBCConnector;
 import fpt.com.component.strategy.BinaryStrategy;
 import fpt.com.component.strategy.DatabaseStrategy;
 import fpt.com.component.strategy.XMLStrategy;
@@ -105,7 +104,7 @@ public class ViewShop
         contentPane.getItems().addAll(productsTableView, rightBox);
 
         // Create ComboBox for strategies
-        comboBox.getItems().addAll(new BinaryStrategy(), new XMLStrategy(), new XStreamStrategy(), new JDBCConnector());
+        comboBox.getItems().addAll(new BinaryStrategy(), new XMLStrategy(), new XStreamStrategy(), new DatabaseStrategy());
         HBox menueBox = new HBox(comboBox, saveButton, loadButton);
 
         // Set content of view

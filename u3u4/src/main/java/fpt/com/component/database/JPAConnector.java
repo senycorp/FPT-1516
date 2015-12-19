@@ -8,8 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-
-import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
 
@@ -148,6 +146,7 @@ public class JPAConnector extends BaseConnector {
     public Product read() {
         if (productsResult == null) {
             Query q = this.getConnection().createQuery("SELECT c FROM Product c", Product.class);
+            q.setMaxResults(10);
             this.productsResult = (List<Product>) q.getResultList();
         }
 
@@ -185,22 +184,4 @@ public class JPAConnector extends BaseConnector {
             this.entityManagerFactory.close();
         }
     }
-
-	@Override
-	public fpt.com.Product readObject() throws IOException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void writeObject(fpt.com.Product obj) throws IOException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void open() throws IOException {
-		// TODO Auto-generated method stub
-		
-	}
 }

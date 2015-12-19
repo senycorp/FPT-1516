@@ -1,6 +1,7 @@
 package fpt.com.model;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAliasType;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import fpt.com.component.converter.DoubleConverter;
@@ -26,6 +27,7 @@ import java.io.ObjectOutput;
 @Entity()
 @Table(name="products")
 @XStreamAlias("Ware")
+@XStreamAliasType( "ware" )
 public class Product
         implements fpt.com.Product, java.io.Externalizable {
 

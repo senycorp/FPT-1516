@@ -3,7 +3,6 @@ package fpt.com.component.database;
 import fpt.com.core.component.database.BaseConnector;
 import fpt.com.model.Product;
 
-import java.io.IOException;
 import java.sql.*;
 
 /**
@@ -33,18 +32,8 @@ public class JDBCConnector extends BaseConnector {
     /**
      * Constructor
      */
-    public JDBCConnector() {
+    private JDBCConnector() {
         // Nothing to do
-    	this.getConnection();
-    }
-    
-    /**
-     * needed for the Combobox
-     * @return
-     */
-    @Override
-    public String toString() {
-    	return "JDBC-Connection";
     }
 
     /**
@@ -127,7 +116,6 @@ public class JDBCConnector extends BaseConnector {
 
             if (rs.next()) {
                 lastInsertedID = rs.getInt(1);
-                return lastInsertedID;
             }
 
             rs.close();
@@ -268,22 +256,4 @@ public class JDBCConnector extends BaseConnector {
     public String getPassword() {
         return "ftpw10";
     }
-
-	@Override
-	public fpt.com.Product readObject() throws IOException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void writeObject(fpt.com.Product obj) throws IOException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void open() throws IOException {
-		// TODO Auto-generated method stub
-		
-	}
 }
