@@ -113,6 +113,8 @@ public class JPAConnector extends BaseConnector {
         int lastInsertedID = -1;
 
         Product product = new Product(0, name, price, quantity);
+        //product.setIdDB(1l);
+        //System.out.println("ID: "+product.getIdDB());
 
         this.getConnection().getTransaction().begin();
 

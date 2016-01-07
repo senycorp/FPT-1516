@@ -46,10 +46,8 @@ public class Product
     @XStreamConverter(StringConverter.class)
     private SimpleStringProperty name = new SimpleStringProperty();
 
-
-
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue ( strategy = GenerationType . IDENTITY, generator = "products_SEQ " )
     @Column(name="id")
     private Long idDB;
 
