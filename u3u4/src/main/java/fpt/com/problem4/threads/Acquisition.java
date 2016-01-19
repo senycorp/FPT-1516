@@ -1,5 +1,6 @@
 package fpt.com.problem4.threads;
 
+import fpt.com.problem4.component.Balance;
 import fpt.com.problem4.component.Customer;
 
 import java.util.Random;
@@ -32,12 +33,12 @@ public class Acquisition
      */
     public Acquisition() {
         this.cashPoints =
-                new Cashpoint[]{Cashpoint.factory("1"),
-                                Cashpoint.factory("2"),
-                                Cashpoint.factory("3"),
-                                Cashpoint.factory("4"),
-                                Cashpoint.factory("5"),
-                                Cashpoint.factory("6")};
+                new Cashpoint[]{Cashpoint.factory(0),
+                                Cashpoint.factory(1),
+                                Cashpoint.factory(2),
+                                Cashpoint.factory(3),
+                                Cashpoint.factory(4),
+                                Cashpoint.factory(5)};
     }
 
     @Override
@@ -46,6 +47,8 @@ public class Acquisition
         this.cashPoints[cashPointCounter].getAsThread().start();
 
         while (true) {
+            System.out.println("[BALANCE]: " +Balance.getInstance());
+
             // Check for maximum amount of customers in queue
             try {
                 // Generate random number between 0 - 2
