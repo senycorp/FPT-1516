@@ -113,9 +113,6 @@ public class JPAConnector extends BaseConnector {
         int lastInsertedID = -1;
 
         Product product = new Product(0, name, price, quantity);
-        //product.setIdDB(1l);
-        //System.out.println("ID: "+product.getIdDB());
-
         this.getConnection().getTransaction().begin();
 
         this.getConnection().persist(product);
@@ -124,6 +121,7 @@ public class JPAConnector extends BaseConnector {
 
         this.close();
 
+        System.out.print(product.getId() +" "+product.getIdDB());
         return  product.getId();
     }
 
@@ -147,7 +145,7 @@ public class JPAConnector extends BaseConnector {
 
     public Product read() {
         if (productsResult == null) {
-            Query q = this.getConnection().createQuery("SELECT c FROM Product c", Product.class);
+            Query q = this.getConnection().createQuery("SELECT c FROM Product c ORDER BY c.idDB DESC ", Product.class);
             q.setMaxResults(10);
             this.productsResult = (List<Product>) q.getResultList();
         }

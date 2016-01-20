@@ -41,7 +41,9 @@ public class DatabaseStrategy extends AbstractDatabaseStrategy
 
     @Override
     public void writeObject(Product obj) throws IOException {
-        if (obj.getId() == 0)
+        if (obj.getId() == 0) {
+            System.out.println(obj.getName());
             BaseConnector.getConnector().insert(obj);
+        }
     }
 }

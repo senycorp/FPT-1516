@@ -47,15 +47,16 @@ public class Product
     private SimpleStringProperty name = new SimpleStringProperty();
 
     @Id
-    @GeneratedValue ( strategy = GenerationType . IDENTITY, generator = "products_SEQ " )
+    @GeneratedValue ( strategy = GenerationType.IDENTITY, generator = "products_SEQ " )
     @Column(name="id")
-    private Long idDB;
+    @XStreamAlias("id")
+    private long idDB;
 
-    public Long getIdDB() {
+    public long getIdDB() {
         return this.idDB;
     }
 
-    public void setIdDB(Long id) {
+    public void setIdDB(long id) {
         this.idDB = id;
         this.id.set(this.idDB);
     }
@@ -63,11 +64,12 @@ public class Product
     /**
      * ID
      */
-    @Persistent
-    @Strategy("fpt.com.db.LongPropertyValueHandler")
+    //@Persistent
+    //@Strategy("fpt.com.db.LongPropertyValueHandler")
     @XStreamAlias("id")
     @XStreamConverter(LongConverter.class)
     @XStreamAsAttribute
+    //@Column(name="id", insertable = false)
     private SimpleLongProperty id = new SimpleLongProperty();
 
     /**
@@ -111,7 +113,7 @@ public class Product
 
     @Override
     public long getId() {
-        return this.id.get();
+        return this.getIdDB();
     }
 
     @Override
