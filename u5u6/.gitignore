@@ -1,0 +1,9 @@
+/target/
+/.plugins
+.log
+version.ini
+/.metadata/*
+.idea
+*/.settings
+*/products.*
+*/productsXStream.xml
